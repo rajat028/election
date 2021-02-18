@@ -24,10 +24,10 @@ contract Election {
     uint public candidateCount;
 
     constructor() {
-        addCandidate("Rajat");
-        addCandidate("Achal");
-        addCandidate("Hansa");
-        addCandidate("Bhumi");
+        addCandidate("Candidate1");
+        addCandidate("Candidate2");
+        addCandidate("Candidate3");
+        addCandidate("Candidate4");
     }
 
     function addCandidate(string memory _name) private {
