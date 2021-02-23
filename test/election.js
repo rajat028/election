@@ -1,4 +1,4 @@
-var Election = artifacts.require("./Election.sol");
+let Election = artifacts.require("./Election.sol");
 
 contract("Election", function (accounts) {
 
@@ -18,12 +18,12 @@ contract("Election", function (accounts) {
             electionInstance = instance;
             return electionInstance.candidates(1);
         }).then(function (candidate) {
-            assert.equal(candidate[0], "Rajat", "Correct Name");
+            assert.equal(candidate[0], "Candidate1", "Correct Name");
             assert.equal(candidate[1], 1, "Correct Id");
             assert.equal(candidate[2], 0, "Default Vote Count");
             return electionInstance.candidates(2);
         }).then(function (secondCandidate) {
-            assert.equal(secondCandidate[0], "Achal", "Correct Name");
+            assert.equal(secondCandidate[0], "Candidate2", "Correct Name");
             assert.equal(secondCandidate[1], 2, "Correct Id");
             assert.equal(secondCandidate[2], 0, "Default Vote Count");
         });
@@ -34,7 +34,7 @@ contract("Election", function (accounts) {
             electionInstance = instance;
             candidateId = 1;
             return electionInstance.vote(candidateId, { from: accounts[0] });
-        }).then(function (receipt) {
+        }).then(function () {
             return electionInstance.voters(accounts[0]);
         }).then(function (voted) {
             assert(voted, "the voter marked as voted")
@@ -49,7 +49,7 @@ contract("Election", function (accounts) {
         return Election.deployed().then(function (instance) {
             electionInstance = instance;
             return electionInstance.vote(3, { from: accounts[0] });
-        }).then(function (receipt) {
+        }).then(function () {
             return electionInstance.vote(3, { from: accounts[0] });
         }).then(assert.fail).catch(function(error){
             assert(error.message.indexOf('revert') >= 0, "error message must contain revert");
@@ -72,6 +72,4 @@ contract("Election", function (accounts) {
             assert.equal(voteCount, 0, "vote count is zero");
         });
     });
-
-
 });
